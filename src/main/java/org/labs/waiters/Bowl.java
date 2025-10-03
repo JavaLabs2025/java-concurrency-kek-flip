@@ -1,13 +1,13 @@
-package org.labs;
+package org.labs.waiters;
 
 public class Bowl {
     private Integer foodUnits;
 
-    Bowl() {
+    public Bowl() {
         this(0);
     }
 
-    Bowl(Integer foodUnits) {
+    public Bowl(Integer foodUnits) {
         this.foodUnits = foodUnits;
     }
 

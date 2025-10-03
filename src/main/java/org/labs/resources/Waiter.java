@@ -1,4 +1,4 @@
-package org.labs.waiters;
+package org.labs.resources;
 
 import java.util.Random;
 
@@ -13,12 +13,12 @@ public class Waiter {
     private Random random = new Random();
 
     public Waiter() {
-        this(Constants.PORTIONS_COUNT, new ConsoleLogger());
+        this(Constants.PORTIONS_COUNT);
     }
 
-    public Waiter(Integer bowlsCount, Logger logger) {
+    public Waiter(Integer bowlsCount) {
         this.bowlsCount = bowlsCount;
-        this.logger = logger;
+        this.logger = new ConsoleLogger("Официант");
     }
 
     synchronized public Boolean hasMoreFood() {
@@ -31,7 +31,7 @@ public class Waiter {
         }
 
         bowlsCount--;
-        logger.log("Официант отдал миску. Мисок осталось", bowlsCount.toString());
+        logger.log("отдал миску.", "Осталось", bowlsCount.toString());
 
         Integer portionSize = random.nextInt(Constants.MAX_PORTION_SIZE - Constants.MIN_PORTION_SIZE + 1)
                 + Constants.MIN_PORTION_SIZE;

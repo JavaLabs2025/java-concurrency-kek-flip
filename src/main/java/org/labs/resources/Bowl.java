@@ -1,4 +1,4 @@
-package org.labs.waiters;
+package org.labs.resources;
 
 public class Bowl {
     private Integer foodUnits;

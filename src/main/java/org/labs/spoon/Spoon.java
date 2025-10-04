@@ -13,7 +13,7 @@ public class Spoon {
 
     public Spoon(Integer id) {
         this.id = id;
-        this.logger = new ConsoleLogger("Ложка " + id.toString());
+        this.logger = new ConsoleLogger("Ложка " + id);
     }
 
     public void take(String actor) {

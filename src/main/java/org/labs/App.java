@@ -2,16 +2,12 @@ package org.labs;
 
 import java.util.ArrayList;
 
-import org.labs.logger.ConsoleLogger;
-import org.labs.logger.Logger;
 import org.labs.programmer.Programmer;
 import org.labs.spoon.Spoon;
 import org.labs.waiter.WaiterService;
 
 public class App {
     public static void main(String[] args) {
-        final Logger logger = new ConsoleLogger();
-
         final var waiterService = new WaiterService();
 
         final var spoons = new ArrayList<Spoon>();
@@ -39,14 +35,14 @@ public class App {
         }
 
         for (final var programmer : programmers) {
-            logger.log("Программист", programmer.getProgrammerId().toString(), "съел",
-                    programmer.getEatenPortions().toString(),
-                    "порций");
+            System.out.println(new StringBuilder().append("Программист ").append(programmer.getProgrammerId())
+                    .append(" съел ").append(programmer.getEatenPortions()).append(" порций").toString());
         }
 
         var servedPortions = waiterService.getServedPortions();
         for (final var portion : servedPortions.entrySet()) {
-            logger.log("Официант", portion.getKey().toString(), "разнес", portion.getValue().toString(), "порций");
+            System.out.println(new StringBuilder().append("Официант ").append(portion.getKey())
+                    .append(" разнес ").append(portion.getValue()).append(" порций").toString());
         }
     }
 }

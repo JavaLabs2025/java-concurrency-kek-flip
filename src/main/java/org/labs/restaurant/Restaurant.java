@@ -2,6 +2,8 @@ package org.labs.restaurant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.labs.logger.ConsoleLogger;
 import org.labs.logger.Logger;
@@ -38,6 +40,8 @@ public class Restaurant {
             p.start();
         }
 
+        logger.log("начал ужин");
+
         for (var p : programmers) {
             try {
                 p.join();
@@ -45,15 +49,13 @@ public class Restaurant {
             }
         }
 
-        for (final var programmer : programmers) {
-            logger.log(new StringBuilder().append("Программист ").append(programmer.getProgrammerId())
-                    .append(" съел ").append(programmer.getEatenPortions()).append(" порций").toString());
-        }
+        logger.log("закончил ужин");
+    }
 
-        var servedPortions = waiters.getServedPortions();
-        for (final var portion : servedPortions.entrySet()) {
-            logger.log(new StringBuilder().append("Официант ").append(portion.getKey())
-                    .append(" разнес ").append(portion.getValue()).append(" порций").toString());
-        }
+    public DinnerInfo getDinnerInfo() {
+        Map<Integer, Integer> programmersEatenPortions = programmers.stream()
+                .collect(Collectors.toMap(Programmer::getProgrammerId, Programmer::getEatenPortions));
+        Map<Integer, Integer> waitersServedPortions = waiters.getServedPortions();
+        return new DinnerInfo(programmersEatenPortions, waitersServedPortions);
     }
 }

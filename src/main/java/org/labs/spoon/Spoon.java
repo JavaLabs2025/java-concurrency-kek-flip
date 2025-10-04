@@ -1,10 +1,10 @@
-package org.labs.resources;
+package org.labs.spoon;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.labs.loggers.ConsoleLogger;
-import org.labs.loggers.Logger;
+import org.labs.logger.ConsoleLogger;
+import org.labs.logger.Logger;
 
 public class Spoon {
     private final Integer id;

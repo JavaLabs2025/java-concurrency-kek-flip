@@ -3,27 +3,27 @@ package org.labs.programmer;
 import java.util.Random;
 
 import org.labs.Constants;
-import org.labs.loggers.ConsoleLogger;
-import org.labs.loggers.Logger;
-import org.labs.resources.Spoon;
-import org.labs.resources.Waiter;
+import org.labs.logger.ConsoleLogger;
+import org.labs.logger.Logger;
+import org.labs.spoon.Spoon;
+import org.labs.waiter.WaiterService;
 
 public class Programmer extends Thread {
     private final Integer id;
     private final Logger logger;
     private final Random random = new Random();
 
-    private Integer portionsEaten = 0;
+    private Integer eatenPortions = 0;
 
-    private final Waiter waiter;
+    private final WaiterService waiters;
     private final Spoon firstSpoon;
     private final Spoon secondSpoon;
 
-    public Programmer(Integer id, Waiter waiter, Spoon leftSpoon, Spoon rightSpoon) {
-        super("Программист " + id.toString());
+    public Programmer(Integer id, WaiterService waiters, Spoon leftSpoon, Spoon rightSpoon) {
+        super("Программист " + id);
 
         this.id = id;
-        this.waiter = waiter;
+        this.waiters = waiters;
 
         if (leftSpoon.getId() < rightSpoon.getId()) {
             this.firstSpoon = leftSpoon;
@@ -41,13 +41,12 @@ public class Programmer extends Thread {
         try {
             logger.log("начал есть");
             while (true) {
-                if (!waiter.hasMoreFood()) {
-                    break;
-                }
 
                 logger.log("просит новую порцию");
                 try {
-                    waiter.pickBowl();
+                    if (!waiters.getPortion(getName())) {
+                        break;
+                    }
                 } catch (Exception e) {
                     break;
                 }
@@ -55,14 +54,13 @@ public class Programmer extends Thread {
                 firstSpoon.take(getName());
                 secondSpoon.take(getName());
 
-                Thread.sleep(random.nextInt(Constants.MAX_EATING_TIME));
+                Thread.sleep(random.nextInt(Constants.MAX_EATING_TIME_MS));
+                eatenPortions++;
                 logger.log("доел порцию");
 
                 secondSpoon.put(getName());
                 firstSpoon.put(getName());
             }
-
-            logger.log("съел", portionsEaten.toString(), "порций");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -70,5 +68,9 @@ public class Programmer extends Thread {
 
     public Integer getProgrammerId() {
         return id;
+    }
+
+    public Integer getEatenPortions() {
+        return eatenPortions;
     }
 }

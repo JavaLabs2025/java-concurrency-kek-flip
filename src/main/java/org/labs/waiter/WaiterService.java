@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import org.labs.Constants;
 import org.labs.logger.ConsoleLogger;
 import org.labs.logger.Logger;
 
@@ -16,10 +15,6 @@ public class WaiterService {
 
     private final List<Waiter> waiters;
     private final AtomicInteger nextWaiter;
-
-    public WaiterService() {
-        this(Constants.WAITERS_COUNT, Constants.PORTIONS_COUNT);
-    }
 
     public WaiterService(Integer waitersCount, Integer portionsCount) {
         Waiter[] mutableWaiters = new Waiter[waitersCount];
